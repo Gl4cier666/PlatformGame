@@ -15,12 +15,12 @@ public class Game implements KeyListener, ActionListener {
 	
 	public static Rectangle object, sqOne, sqTwo, sqThree, sqFour;
 	
-	public boolean gameOver, started;
+	public boolean gameOver;
 	
 	public static final int WIDTH = 640, HEIGHT = 480;
 	
 	/**
-	 * Author: Bo Aanes~ hehehehe
+	 * Author: Bo Aanes~
 	 */
 	
 	public Game()
