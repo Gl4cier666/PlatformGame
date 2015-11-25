@@ -1,6 +1,9 @@
+/**
+ * Bo Aanes
+ */
+
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -8,27 +11,22 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
+import javax.swing.text.AbstractDocument.LeafElement;
 
 public class Game implements KeyListener, ActionListener {
 	
+	public static Player player;
 	public Renderer renderer;
-	
-	public static Rectangle object;
-	
 	public boolean gameOver, win;
-	
 	public static final int WIDTH = 640, HEIGHT = 480;
 	
-	/**
-	 * Author: Bo Aanes~
-	 */
-	 
 	public Game()
 	{
 		JFrame jframe = new JFrame();
 		Timer timer = new Timer(20, this);
 		
 		renderer = new Renderer();
+		player = new Player();
 		
 		jframe.addKeyListener(this);
 		jframe.add(renderer);
@@ -38,7 +36,6 @@ public class Game implements KeyListener, ActionListener {
 		jframe.setLocationRelativeTo(null);
 		jframe.setResizable(false);
 		
-		object = new Rectangle(0, 0, 20, 20);
 		Level.addRects();
 		
 		timer.start();
@@ -50,7 +47,7 @@ public class Game implements KeyListener, ActionListener {
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		g.setColor(Color.red);
-		g.fillRect(object.x, object.y, object.width, object.height);
+		g.fillRect(player.x, player.y, player.width, player.height);
 		
 		g.setColor(Color.blue);
 		g.fillRect(Level.upLeft.x, Level.upLeft.y, Level.upLeft.width, Level.upLeft.height);
@@ -66,50 +63,27 @@ public class Game implements KeyListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if(object.intersects(Level.upLeft) || object.intersects(Level.down) || object.intersects(Level.mid) || object.intersects(Level.upRight) || object.intersects(Level.pole))
+		player.physics();
+		
+		//FIX THIS!!!!
+		if(player.playerObject.intersects(Level.upLeft) || player.playerObject.intersects(Level.down) || player.playerObject.intersects(Level.mid) || player.playerObject.intersects(Level.upRight) || player.playerObject.intersects(Level.pole))
 		{
 			gameOver = true;
 		}
 		
-		if(object.x < 0)
-		{
-			object.x = 0;
-		}
-		else if (object.x > WIDTH - 26)
-		{
-			object.x = WIDTH - 26;
-		}
-		else if(object.y < 0)
-		{
-			object.y = 0;
-		}
-		else if(object.y > HEIGHT - 50)
-		{
-			object.y = HEIGHT - 50;
-		}
-		
-		if(object.intersects(Level.target))
-		{
-			win = true;
-			
-			if(win)
-			{
-				Level.advance();
-			}
-		}
-		
+		//AND THIS!!!
 		if(gameOver)
 		{
-			object.x = 0;
-			object.y = 0;
-			
+			player.x = 0;
+			player.y = 0;
+			System.out.println("gameover");
 			gameOver = false;
 		}
 		
 		renderer.repaint();
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
 		new Game();
 	}
@@ -119,20 +93,20 @@ public class Game implements KeyListener, ActionListener {
 	{
 		switch(e.getKeyCode())
 		{
-		case KeyEvent.VK_UP:
-			object.y = object.y - 5;
-			break;
-		
-		case KeyEvent.VK_DOWN:
-			object.y = object.y + 5;
-			break;
-			
 		case KeyEvent.VK_LEFT:
-			object.x = object.x - 5;
+			player.xSpeed = Math.max(-5, player.xSpeed - 1);
 			break;
 			
 		case KeyEvent.VK_RIGHT:
-			object.x = object.x + 5;
+			player.xSpeed = Math.min(5, player.xSpeed + 1);
+			break;
+			
+		case KeyEvent.VK_UP:
+			player.ySpeed = Math.max(-5, player.ySpeed - 1);
+			break;
+			
+		case KeyEvent.VK_DOWN:
+			player.ySpeed = Math.min(5, player.ySpeed + 1);
 			break;
 			
 		case KeyEvent.VK_ESCAPE:
