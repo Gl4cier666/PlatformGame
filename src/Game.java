@@ -13,16 +13,16 @@ public class Game implements KeyListener, ActionListener {
 	
 	public Renderer renderer;
 	
-	public static Rectangle object, sqOne, sqTwo, sqThree, sqFour;
+	public static Rectangle object;
 	
-	public boolean gameOver;
+	public boolean gameOver, win;
 	
 	public static final int WIDTH = 640, HEIGHT = 480;
 	
 	/**
 	 * Author: Bo Aanes~
 	 */
-	
+	 
 	public Game()
 	{
 		JFrame jframe = new JFrame();
@@ -38,11 +38,8 @@ public class Game implements KeyListener, ActionListener {
 		jframe.setLocationRelativeTo(null);
 		jframe.setResizable(false);
 		
-		object = new Rectangle(WIDTH / 2 - 10, HEIGHT / 2 - 10, 20, 20);
-		sqOne = new Rectangle(0, 0, WIDTH / 2 - 10, HEIGHT / 2 - 10);
-		sqTwo = new Rectangle(0, HEIGHT / 2 + 10, WIDTH / 2 - 10, HEIGHT / 2 - 10);
-		sqThree = new Rectangle(WIDTH / 2 + 10, 0, WIDTH / 2 - 10, HEIGHT / 2 - 10);
-		sqFour = new Rectangle(WIDTH / 2 + 10, HEIGHT / 2 + 10, WIDTH / 2 - 10, HEIGHT / 2 - 10);
+		object = new Rectangle(0, 0, 20, 20);
+		Level.addRects();
 		
 		timer.start();
 	}
@@ -56,16 +53,20 @@ public class Game implements KeyListener, ActionListener {
 		g.fillRect(object.x, object.y, object.width, object.height);
 		
 		g.setColor(Color.blue);
-		g.fillRect(sqOne.x, sqOne.y, sqOne.width, sqOne.height);
-		g.fillRect(sqTwo.x, sqTwo.y, sqTwo.width, sqTwo.height);
-		g.fillRect(sqThree.x, sqThree.y, sqThree.width, sqThree.height);
-		g.fillRect(sqFour.x, sqFour.y, sqFour.width, sqFour.height);
+		g.fillRect(Level.upLeft.x, Level.upLeft.y, Level.upLeft.width, Level.upLeft.height);
+		g.fillRect(Level.down.x, Level.down.y, Level.down.width, Level.down.height);
+		g.fillRect(Level.mid.x, Level.mid.y, Level.mid.width, Level.mid.height);
+		g.fillRect(Level.upRight.x, Level.upRight.y, Level.upRight.width, Level.upRight.height);
+		g.fillRect(Level.pole.x, Level.pole.y, Level.pole.width, Level.pole.height);
+		
+		g.setColor(Color.green);
+		g.fillRect(Level.target.x, Level.target.y, Level.target.width, Level.target.height);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if(object.intersects(sqOne) || object.intersects(sqTwo) || object.intersects(sqThree) || object.intersects(sqFour))
+		if(object.intersects(Level.upLeft) || object.intersects(Level.down) || object.intersects(Level.mid) || object.intersects(Level.upRight) || object.intersects(Level.pole))
 		{
 			gameOver = true;
 		}
@@ -87,10 +88,20 @@ public class Game implements KeyListener, ActionListener {
 			object.y = HEIGHT - 50;
 		}
 		
+		if(object.intersects(Level.target))
+		{
+			win = true;
+			
+			if(win)
+			{
+				Level.advance();
+			}
+		}
+		
 		if(gameOver)
 		{
-			object.x = WIDTH / 2 - 10;
-			object.y = HEIGHT / 2 - 10;
+			object.x = 0;
+			object.y = 0;
 			
 			gameOver = false;
 		}
