@@ -11,7 +11,6 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.Timer;
-import javax.swing.text.AbstractDocument.LeafElement;
 
 public class Game implements KeyListener, ActionListener {
 	
@@ -19,6 +18,7 @@ public class Game implements KeyListener, ActionListener {
 	public Renderer renderer;
 	public boolean gameOver, win;
 	public static final int WIDTH = 640, HEIGHT = 480;
+	public int ticks, currentTicks;
 	
 	public Game()
 	{
@@ -63,20 +63,37 @@ public class Game implements KeyListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		ticks++;
+		currentTicks = ticks;
 		player.physics();
 		
-		//FIX THIS!!!!
-		if(player.playerObject.intersects(Level.upLeft) || player.playerObject.intersects(Level.down) || player.playerObject.intersects(Level.mid) || player.playerObject.intersects(Level.upRight) || player.playerObject.intersects(Level.pole))
+		if(player.x > 20 && player.x < 120 && player.y < HEIGHT / 2)
+		{
+			gameOver = true;
+		}
+		else if(player.x >= 0 && player.x < WIDTH - 30 && player.y > HEIGHT / 2 + 10)
+		{
+			gameOver = true;
+		}
+		else if(player.x > WIDTH / 2 - 80 && player.x < WIDTH / 2 + 60 && player.y < 50 + 120 && player.y > 30)
+		{
+			gameOver = true;
+		}
+		else if(player.x > WIDTH - 140 && player.y < 80)
+		{
+			gameOver = true;
+		}
+		else if(player.x > WIDTH - 140 && player.x < WIDTH - 120 + 90 && player.y > 100)
 		{
 			gameOver = true;
 		}
 		
-		//AND THIS!!!
 		if(gameOver)
 		{
 			player.x = 0;
 			player.y = 0;
-			System.out.println("gameover");
+			player.xSpeed = 0;
+			player.ySpeed = 0;
 			gameOver = false;
 		}
 		
