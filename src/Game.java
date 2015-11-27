@@ -1,7 +1,3 @@
-/**
- * Bo Aanes
- */
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -20,6 +16,10 @@ public class Game implements KeyListener, ActionListener {
 	public static final int WIDTH = 640, HEIGHT = 480;
 	public int ticks, currentTicks;
 	
+	/**
+	 * Bo Aanes
+	 */
+	
 	public Game()
 	{
 		JFrame jframe = new JFrame();
@@ -36,7 +36,7 @@ public class Game implements KeyListener, ActionListener {
 		jframe.setLocationRelativeTo(null);
 		jframe.setResizable(false);
 		
-		Level.addRects();
+		Level.firstLevel();
 		
 		timer.start();
 	}
@@ -50,11 +50,11 @@ public class Game implements KeyListener, ActionListener {
 		g.fillRect(player.x, player.y, player.width, player.height);
 		
 		g.setColor(Color.blue);
-		g.fillRect(Level.upLeft.x, Level.upLeft.y, Level.upLeft.width, Level.upLeft.height);
-		g.fillRect(Level.down.x, Level.down.y, Level.down.width, Level.down.height);
-		g.fillRect(Level.mid.x, Level.mid.y, Level.mid.width, Level.mid.height);
-		g.fillRect(Level.upRight.x, Level.upRight.y, Level.upRight.width, Level.upRight.height);
-		g.fillRect(Level.pole.x, Level.pole.y, Level.pole.width, Level.pole.height);
+		g.fillRect(Level.one.x, Level.one.y, Level.one.width, Level.one.height);
+		g.fillRect(Level.two.x, Level.two.y, Level.two.width, Level.two.height);
+		g.fillRect(Level.three.x, Level.three.y, Level.three.width, Level.three.height);
+		g.fillRect(Level.four.x, Level.four.y, Level.four.width, Level.four.height);
+		g.fillRect(Level.five.x, Level.five.y, Level.five.width, Level.five.height);
 		
 		g.setColor(Color.green);
 		g.fillRect(Level.target.x, Level.target.y, Level.target.width, Level.target.height);
@@ -108,29 +108,7 @@ public class Game implements KeyListener, ActionListener {
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		switch(e.getKeyCode())
-		{
-		case KeyEvent.VK_LEFT:
-			player.xSpeed = Math.max(-5, player.xSpeed - 1);
-			break;
-			
-		case KeyEvent.VK_RIGHT:
-			player.xSpeed = Math.min(5, player.xSpeed + 1);
-			break;
-			
-		case KeyEvent.VK_UP:
-			player.ySpeed = Math.max(-5, player.ySpeed - 1);
-			break;
-			
-		case KeyEvent.VK_DOWN:
-			player.ySpeed = Math.min(5, player.ySpeed + 1);
-			break;
-			
-		case KeyEvent.VK_ESCAPE:
-			System.exit(0);
-			break;
-		}
-		
+		player.movement(e);		
 	}
 
 	@Override

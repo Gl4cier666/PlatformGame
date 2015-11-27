@@ -1,4 +1,5 @@
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 
 public class Player {
 	
@@ -40,6 +41,32 @@ public class Player {
 		{
 			x = 0;
 			xSpeed = 0;
+		}
+	}
+	
+	public void movement(KeyEvent e)
+	{
+		switch(e.getKeyCode())
+		{
+		case KeyEvent.VK_LEFT:
+			xSpeed = Math.max(-5, xSpeed - 1);
+			break;
+			
+		case KeyEvent.VK_RIGHT:
+			xSpeed = Math.min(5, xSpeed + 1);
+			break;
+			
+		case KeyEvent.VK_UP:
+			ySpeed = Math.max(-5, ySpeed - 1);
+			break;
+			
+		case KeyEvent.VK_DOWN:
+			ySpeed = Math.min(5, ySpeed + 1);
+			break;
+			
+		case KeyEvent.VK_ESCAPE:
+			System.exit(0);
+			break;
 		}
 	}
 	

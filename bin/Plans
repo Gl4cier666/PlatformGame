@@ -2,3 +2,4 @@ Features to be added:
 - Multi levels, in Level.class
 - Own collision class
 - Friction (maybe)
+- Add if player is standing still for 3 sec, game over (only if not adding friction)
