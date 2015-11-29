@@ -12,9 +12,10 @@ public class Game implements KeyListener, ActionListener {
 	
 	public static Player player;
 	public Renderer renderer;
-	public boolean gameOver, win;
+	public static Collision collision;
+	public static boolean gameOver, win;
 	public static final int WIDTH = 640, HEIGHT = 480;
-	public int ticks, currentTicks;
+	public int ticks, frzTime;
 	
 	/**
 	 * Bo Aanes
@@ -28,6 +29,7 @@ public class Game implements KeyListener, ActionListener {
 		renderer = new Renderer();
 		player = new Player();
 		
+		jframe.setTitle("Platform Game 0.1");
 		jframe.addKeyListener(this);
 		jframe.add(renderer);
 		jframe.setVisible(true);
@@ -36,7 +38,7 @@ public class Game implements KeyListener, ActionListener {
 		jframe.setLocationRelativeTo(null);
 		jframe.setResizable(false);
 		
-		Level.firstLevel();
+		Level.addRects();
 		
 		timer.start();
 	}
@@ -64,28 +66,29 @@ public class Game implements KeyListener, ActionListener {
 	public void actionPerformed(ActionEvent e)
 	{
 		ticks++;
-		currentTicks = ticks;
 		player.physics();
 		
-		if(player.x > 20 && player.x < 120 && player.y < HEIGHT / 2)
+		Collision.collide();
+		
+		if(player.xSpeed == 0 && player.ySpeed == 0)
 		{
-			gameOver = true;
+			frzTime++;
+			
+			if(frzTime > 25)
+			{
+				gameOver = true;
+				frzTime = 0;
+			}
 		}
-		else if(player.x >= 0 && player.x < WIDTH - 30 && player.y > HEIGHT / 2 + 10)
+		
+		if(player.xSpeed != 0 || player.ySpeed != 0)
 		{
-			gameOver = true;
+			frzTime = 0;
 		}
-		else if(player.x > WIDTH / 2 - 80 && player.x < WIDTH / 2 + 60 && player.y < 50 + 120 && player.y > 30)
+		
+		if(player.x > WIDTH - 30 && player.y > HEIGHT - 55)
 		{
-			gameOver = true;
-		}
-		else if(player.x > WIDTH - 140 && player.y < 80)
-		{
-			gameOver = true;
-		}
-		else if(player.x > WIDTH - 140 && player.x < WIDTH - 120 + 90 && player.y > 100)
-		{
-			gameOver = true;
+			Level.advance();
 		}
 		
 		if(gameOver)
@@ -108,7 +111,14 @@ public class Game implements KeyListener, ActionListener {
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		player.movement(e);		
+		player.movement(e);
+		
+		switch(e.getKeyCode())
+		{
+		case (KeyEvent.VK_ESCAPE):
+			System.exit(0);
+			break;
+		}
 	}
 
 	@Override

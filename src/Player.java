@@ -63,10 +63,6 @@ public class Player {
 		case KeyEvent.VK_DOWN:
 			ySpeed = Math.min(5, ySpeed + 1);
 			break;
-			
-		case KeyEvent.VK_ESCAPE:
-			System.exit(0);
-			break;
 		}
 	}
 	
