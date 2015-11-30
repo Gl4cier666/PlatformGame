@@ -79,6 +79,8 @@ public class Game implements KeyListener, ActionListener {
 				gameOver = true;
 				frzTime = 0;
 			}
+			
+			System.out.println(frzTime);
 		}
 		
 		if(player.xSpeed != 0 || player.ySpeed != 0)
