@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,9 +12,6 @@ public class Game implements KeyListener, ActionListener {
 	
 	public static Player player;
 	public Renderer renderer;
-	public Level level;
-	public Rectangle playerRect;
-	public static Collision collision;
 	public static boolean gameOver, win;
 	public static final int WIDTH = 640, HEIGHT = 480;
 	public int ticks, frzTime;
@@ -42,7 +38,6 @@ public class Game implements KeyListener, ActionListener {
 		jframe.setResizable(false);
 		
 		Level.addRects();
-		playerRect = new Rectangle(Player.x, Player.y, Player.width, Player.height);
 		
 		timer.start();
 	}
@@ -62,7 +57,7 @@ public class Game implements KeyListener, ActionListener {
 		ticks++;
 		player.physics();
 		
-		Collision.collide();
+		Level.collide();
 		
 		if(player.xSpeed == 0 && player.ySpeed == 0)
 		{	
@@ -73,8 +68,6 @@ public class Game implements KeyListener, ActionListener {
 				gameOver = true;
 				frzTime = 0;
 			}
-			
-			System.out.println(frzTime);
 		}
 		
 		if(player.xSpeed != 0 || player.ySpeed != 0)

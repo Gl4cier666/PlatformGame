@@ -7,7 +7,7 @@ public class Player {
 	
 	public static int x, y, width, height;
 	public double xSpeed, ySpeed;
-	public Rectangle playerObject;
+	public static Rectangle playerObject;
 	
 	public Player()
 	{
@@ -16,7 +16,7 @@ public class Player {
 		width = 20;
 		height = 20;
 		
-		
+		playerObject = new Rectangle(x, y, width, height);
 	}
 	
 	public void physics()

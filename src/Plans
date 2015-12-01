@@ -1,4 +1,4 @@
 Features to be added:
 - Limited time to complete level
 - Score
-- Some kind of way to make collision code better(make the rectangles an own object)
+- Better implementation of rectangles, i guess.

@@ -6,11 +6,23 @@ public class Level extends Game {
 	
 	public static Rectangle one, two, three, four, five, target;
 	public static int levelNum = 0;
+	public Game game;
+	
+	public static void clearRects()
+	{
+		one = new Rectangle();
+		two = new Rectangle();
+		three = new Rectangle();
+		four = new Rectangle();
+		five = new Rectangle();
+	}
 	
 	public static void addRects()
 	{
 		if(levelNum == 0)
 		{
+			clearRects();
+			
 			one = new Rectangle(40, 0, 80, HEIGHT / 2);
 			two = new Rectangle(0, HEIGHT / 2 + 30, WIDTH - 30, HEIGHT / 2 - 30);
 			three = new Rectangle(WIDTH / 2 - 60, 50, 120, 120);
@@ -21,6 +33,8 @@ public class Level extends Game {
 		
 		if(levelNum == 1)
 		{
+			clearRects();
+			
 			one = new Rectangle(0, 25, WIDTH / 2 - 50, 120);
 			two = new Rectangle(50, HEIGHT / 2 - 50, WIDTH / 2 + 70, HEIGHT / 2 - 20);
 			three = new Rectangle(WIDTH / 2, 0, 120, HEIGHT / 2 - 50);
@@ -28,6 +42,18 @@ public class Level extends Game {
 			five = new Rectangle(WIDTH / 2 + 170, HEIGHT / 2 - 50, 120, HEIGHT / 2 + 40);
 			target = new Rectangle(WIDTH - 30, HEIGHT - 50, 25, 25);
 		}
+	}
+	
+	public static void collide()
+	{
+		if((Player.x > one.x - 20 && Player.x < one.x + one.width && Player.y > one.y - 20 && Player.y < one.y + one.height) ||
+			(Player.x > two.x - 20 && Player.x < two.x + two.width && Player.y > two.y - 20 && Player.y < two.y + two.height) ||
+			(Player.x > three.x - 20 && Player.x < three.x + three.width && Player.y > three.y - 20 && Player.y < three.y + three.height) ||
+			(Player.x > four.x - 20 && Player.x < four.x + four.width && Player.y > four.y - 20 && Player.y < four.y + four.height) ||
+			(Player.x > five.x - 20 && Player.x < five.x + five.width && Player.y > five.y - 20 && Player.y < five.y + five.height))
+			{
+				gameOver = true;
+			}
 	}
 	
 	public static void draw(Graphics g)
