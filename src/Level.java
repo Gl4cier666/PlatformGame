@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public class Level extends Game {
@@ -28,6 +30,19 @@ public class Level extends Game {
 		}
 	}
 	
+	public static void draw(Graphics g)
+	{
+		g.setColor(Color.blue);
+		g.fillRect(one.x, one.y, one.width, one.height);
+		g.fillRect(two.x, two.y, two.width, two.height);
+		g.fillRect(three.x, three.y, three.width, three.height);
+		g.fillRect(four.x, four.y, four.width, four.height);
+		g.fillRect(five.x, five.y, five.width, five.height);
+
+		g.setColor(Color.green);
+		g.fillRect(target.x, target.y, target.width, target.height);
+	}
+	
 	public static void advance()
 	{
 		if(levelNum == 0)
@@ -41,8 +56,8 @@ public class Level extends Game {
 		
 		addRects();
 		
-		player.x = 0;
-		player.y = 0;
+		Player.x = 0;
+		Player.y = 0;
 		player.xSpeed = 0;
 		player.ySpeed = 0;
 	}

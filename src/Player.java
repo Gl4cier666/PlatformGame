@@ -1,9 +1,11 @@
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
 public class Player {
 	
-	public int x, y, width, height;
+	public static int x, y, width, height;
 	public double xSpeed, ySpeed;
 	public Rectangle playerObject;
 	
@@ -14,7 +16,7 @@ public class Player {
 		width = 20;
 		height = 20;
 		
-		playerObject = new Rectangle(x, y, width, height);
+		
 	}
 	
 	public void physics()
@@ -42,6 +44,12 @@ public class Player {
 			x = 0;
 			xSpeed = 0;
 		}
+	}
+	
+	public static void draw(Graphics g)
+	{
+		g.setColor(Color.red);
+		g.fillRect(x, y, width, height);
 	}
 	
 	public void movement(KeyEvent e)
