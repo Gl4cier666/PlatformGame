@@ -28,7 +28,7 @@ public class Game implements KeyListener, ActionListener {
 		renderer = new Renderer();
 		player = new Player();
 		
-		jframe.setTitle("Platform Game 0.1");
+		jframe.setTitle("Game");
 		jframe.setVisible(true);
 		jframe.addKeyListener(this);
 		jframe.add(renderer);
@@ -75,7 +75,7 @@ public class Game implements KeyListener, ActionListener {
 			frzTime = 0;
 		}
 		
-		if(Player.x > WIDTH - 30 && Player.y > HEIGHT - 55)
+		if(Player.x > Level.target.x && Player.y > Level.target.y)
 		{
 			Level.advance();
 		}
