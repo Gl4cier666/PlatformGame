@@ -55,8 +55,8 @@ public class Game implements KeyListener, ActionListener {
 	public void actionPerformed(ActionEvent e)
 	{
 		ticks++;
-		player.physics();
 		
+		player.physics();
 		Level.collide();
 		
 		if(player.xSpeed == 0 && player.ySpeed == 0)
