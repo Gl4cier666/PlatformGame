@@ -17,7 +17,7 @@ public class Game implements KeyListener, ActionListener {
 	public int ticks, frzTime;
 	
 	/**
-	 * Bo Aanes
+	 * @author Bo Aanes
 	 */
 	
 	public Game()
@@ -47,8 +47,8 @@ public class Game implements KeyListener, ActionListener {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		Player.draw(g);
 		Level.draw(g);
+		Player.draw(g);
 	}
 	
 	@Override
@@ -57,9 +57,10 @@ public class Game implements KeyListener, ActionListener {
 		ticks++;
 		
 		player.physics();
-		Level.collide();
+		player.loadImage();
+		//Level.collide();
 		
-		if(player.xSpeed == 0 && player.ySpeed == 0)
+		if(Player.xSpeed == 0 && Player.ySpeed == 0)
 		{	
 			frzTime++;
 			
@@ -70,7 +71,7 @@ public class Game implements KeyListener, ActionListener {
 			}
 		}
 		
-		if(player.xSpeed != 0 || player.ySpeed != 0)
+		if(Player.xSpeed != 0 || Player.ySpeed != 0)
 		{
 			frzTime = 0;
 		}
@@ -84,8 +85,9 @@ public class Game implements KeyListener, ActionListener {
 		{
 			Player.x = 0;
 			Player.y = 0;
-			player.xSpeed = 0;
-			player.ySpeed = 0;
+			Player.xSpeed = 0;
+			Player.ySpeed = 0;
+			
 			gameOver = false;
 		}
 		
@@ -106,6 +108,9 @@ public class Game implements KeyListener, ActionListener {
 		{
 		case (KeyEvent.VK_ESCAPE):
 			System.exit(0);
+			break;
+		case (KeyEvent.VK_H):
+			Level.stopMusic();
 			break;
 		}
 	}

@@ -1,11 +1,20 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.File;
+import java.util.Random;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class Level extends Game {
 	
 	public static Rectangle one, two, three, four, five, target;
 	public static int levelNum = 0;
+	public static AudioInputStream audioInput;
+	public static Clip clip;
+	public static boolean isPlaying;
 	public Game game;
 	
 	public static void clearRects()
@@ -46,11 +55,11 @@ public class Level extends Game {
 	
 	public static void collide()
 	{
-		if((Player.x > one.x - 20 && Player.x < one.x + one.width && Player.y > one.y - 20 && Player.y < one.y + one.height) ||
-			(Player.x > two.x - 20 && Player.x < two.x + two.width && Player.y > two.y - 20 && Player.y < two.y + two.height) ||
-			(Player.x > three.x - 20 && Player.x < three.x + three.width && Player.y > three.y - 20 && Player.y < three.y + three.height) ||
-			(Player.x > four.x - 20 && Player.x < four.x + four.width && Player.y > four.y - 20 && Player.y < four.y + four.height) ||
-			(Player.x > five.x - 20 && Player.x < five.x + five.width && Player.y > five.y - 20 && Player.y < five.y + five.height))
+		if((Player.x > one.x - 16 && Player.x < one.x + one.width && Player.y > one.y - 16 && Player.y < one.y + one.height) ||
+			(Player.x > two.x - 16 && Player.x < two.x + two.width && Player.y > two.y - 16 && Player.y < two.y + two.height) ||
+			(Player.x > three.x - 16 && Player.x < three.x + three.width && Player.y > three.y - 16 && Player.y < three.y + three.height) ||
+			(Player.x > four.x - 16 && Player.x < four.x + four.width && Player.y > four.y - 16 && Player.y < four.y + four.height) ||
+			(Player.x > five.x - 16 && Player.x < five.x + five.width && Player.y > five.y - 16 && Player.y < five.y + five.height))
 			{
 				gameOver = true;
 			}
@@ -69,8 +78,44 @@ public class Level extends Game {
 		g.fillRect(target.x, target.y, target.width, target.height);
 	}
 	
+	public static void playMusic()
+	{
+		//stopMusic();
+		
+		char[] chars = "1234".toCharArray();
+		StringBuilder stringBuilder = new StringBuilder();
+		Random random = new Random();
+		
+		for(int i = 0; i < 1; i++)
+		{
+			char c = chars[random.nextInt(chars.length)];
+			stringBuilder.append(c);
+		}
+		String output = stringBuilder.toString();
+		System.out.println(output);
+		
+		try
+		{
+			audioInput = AudioSystem.getAudioInputStream(new File("assets/song_" + output + ".wav"));
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInput);
+			clip.start();
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error playing sound");
+		}
+	}
+	
+	public static void stopMusic()
+	{
+		clip.stop();
+	}
+	
 	public static void advance()
 	{
+		playMusic();
+		
 		if(levelNum == 0)
 		{
 			levelNum++;			
@@ -81,11 +126,10 @@ public class Level extends Game {
 		}
 		
 		addRects();
-		
 		Player.x = 0;
 		Player.y = 0;
-		player.xSpeed = 0;
-		player.ySpeed = 0;
+		Player.xSpeed = 0;
+		Player.ySpeed = 0;
 	}
 	
 }
