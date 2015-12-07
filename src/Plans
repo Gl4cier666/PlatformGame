@@ -1,9 +1,11 @@
 Features to be added:
-- Limited time to complete level(?)
-- Score(?)
-- Better implementation of rectangles, i guess.
-- MORE LEVELS ! :D
+- Limited time to complete level(?) /nti
+- Score(?) /nti
+- Better implementation of rectangles, i guess. /nti
+- MORE LEVELS ! :D (perhaps random level generator?)
 - Using images instead of simple 2D graphics (implemented player)
 - More music/sounds
-- Easter egg(last)
-- FIX MUSIC!
+- Easter egg /nti
+- FIX MUSIC! /i
+- Main menu
+- Afterbruner texture/rendering behind player

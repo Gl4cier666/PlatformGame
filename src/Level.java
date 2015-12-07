@@ -37,7 +37,7 @@ public class Level extends Game {
 			three = new Rectangle(WIDTH / 2 - 60, 50, 120, 120);
 			four = new Rectangle(WIDTH - 120, 0, 120, 80);
 			five = new Rectangle(WIDTH - 120, 120, 90, 210);
-			target = new Rectangle(WIDTH - 30, HEIGHT - 55, 25, 25);
+			target = new Rectangle(WIDTH - 30, HEIGHT - 50, 25, 25);
 		}
 		
 		if(levelNum == 1)
@@ -49,7 +49,7 @@ public class Level extends Game {
 			three = new Rectangle(WIDTH / 2, 0, 120, HEIGHT / 2 - 50);
 			four = new Rectangle(WIDTH / 2 + 120, 0, 200, 80);
 			five = new Rectangle(WIDTH / 2 + 170, HEIGHT / 2 - 50, 120, HEIGHT / 2 + 40);
-			target = new Rectangle(WIDTH - 30, HEIGHT - 55, 25, 25);
+			target = new Rectangle(WIDTH - 30, HEIGHT - 50, 25, 25);
 		}
 	}
 	
@@ -114,7 +114,7 @@ public class Level extends Game {
 	
 	public static void advance()
 	{
-		playMusic();
+		//playMusic();
 		
 		if(levelNum == 0)
 		{

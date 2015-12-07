@@ -37,6 +37,7 @@ public class Game implements KeyListener, ActionListener {
 		jframe.setLocationRelativeTo(null);
 		jframe.setResizable(false);
 		
+		Level.playMusic();
 		Level.addRects();
 		
 		timer.start();
@@ -58,7 +59,7 @@ public class Game implements KeyListener, ActionListener {
 		
 		player.physics();
 		player.loadImage();
-		//Level.collide();
+		Level.collide();
 		
 		if(Player.xSpeed == 0 && Player.ySpeed == 0)
 		{	
@@ -66,7 +67,7 @@ public class Game implements KeyListener, ActionListener {
 			
 			if(frzTime > 25)
 			{
-				gameOver = true;
+				//gameOver = true;
 				frzTime = 0;
 			}
 		}
@@ -76,7 +77,7 @@ public class Game implements KeyListener, ActionListener {
 			frzTime = 0;
 		}
 		
-		if(Player.x > Level.target.x && Player.y > Level.target.y)
+		if(Player.x + Player.width > Level.target.x && Player.y + Player.height > Level.target.y)
 		{
 			Level.advance();
 		}

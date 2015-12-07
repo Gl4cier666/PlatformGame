@@ -102,7 +102,7 @@ public class Player extends Component {
 		switch(e.getKeyCode())
 		{
 		case KeyEvent.VK_LEFT:
-			xSpeed = Math.max(-5, xSpeed - 1);
+			xSpeed = Math.max(-10, xSpeed - 1);
 			up = false;
 			down = false;
 			left = true;
@@ -110,7 +110,7 @@ public class Player extends Component {
 			break;
 			
 		case KeyEvent.VK_RIGHT:
-			xSpeed = Math.min(5, xSpeed + 1);
+			xSpeed = Math.min(10, xSpeed + 1);
 			up = false;
 			down = false;
 			left = false;
@@ -118,7 +118,7 @@ public class Player extends Component {
 			break;
 			
 		case KeyEvent.VK_UP:
-			ySpeed = Math.max(-5, ySpeed - 1);
+			ySpeed = Math.max(-10, ySpeed - 1);
 			up = true;
 			down = false;
 			left = false;
@@ -126,7 +126,7 @@ public class Player extends Component {
 			break;
 			
 		case KeyEvent.VK_DOWN:
-			ySpeed = Math.min(5, ySpeed + 1);
+			ySpeed = Math.min(10, ySpeed + 1);
 			up = false;
 			down = true;
 			left = false;
