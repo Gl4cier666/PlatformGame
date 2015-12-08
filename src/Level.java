@@ -1,20 +1,11 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
-import java.io.File;
-import java.util.Random;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 public class Level extends Game {
 	
 	public static Rectangle one, two, three, four, five, target;
 	public static int levelNum = 0;
-	public static AudioInputStream audioInput;
-	public static Clip clip;
-	public static boolean isPlaying;
 	public Game game;
 	
 	public static void clearRects()
@@ -78,43 +69,9 @@ public class Level extends Game {
 		g.fillRect(target.x, target.y, target.width, target.height);
 	}
 	
-	public static void playMusic()
-	{
-		//stopMusic();
-		
-		char[] chars = "1234".toCharArray();
-		StringBuilder stringBuilder = new StringBuilder();
-		Random random = new Random();
-		
-		for(int i = 0; i < 1; i++)
-		{
-			char c = chars[random.nextInt(chars.length)];
-			stringBuilder.append(c);
-		}
-		String output = stringBuilder.toString();
-		System.out.println(output);
-		
-		try
-		{
-			audioInput = AudioSystem.getAudioInputStream(new File("assets/song_" + output + ".wav"));
-			Clip clip = AudioSystem.getClip();
-			clip.open(audioInput);
-			clip.start();
-		}
-		catch(Exception e)
-		{
-			System.out.println("Error playing sound");
-		}
-	}
-	
-	public static void stopMusic()
-	{
-		clip.stop();
-	}
-	
 	public static void advance()
 	{
-		//playMusic();
+		//Sound.playMusic();
 		
 		if(levelNum == 0)
 		{

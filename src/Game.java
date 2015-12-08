@@ -12,9 +12,10 @@ public class Game implements KeyListener, ActionListener {
 	
 	public static Player player;
 	public Renderer renderer;
+	public Sound sound;
 	public static boolean gameOver, win;
 	public static final int WIDTH = 640, HEIGHT = 480;
-	public int ticks, frzTime;
+	public int ticks;
 	
 	/**
 	 * @author Bo Aanes
@@ -27,6 +28,7 @@ public class Game implements KeyListener, ActionListener {
 		
 		renderer = new Renderer();
 		player = new Player();
+		sound = new Sound();
 		
 		jframe.setTitle("Game");
 		jframe.setVisible(true);
@@ -37,8 +39,8 @@ public class Game implements KeyListener, ActionListener {
 		jframe.setLocationRelativeTo(null);
 		jframe.setResizable(false);
 		
-		Level.playMusic();
 		Level.addRects();
+
 		
 		timer.start();
 	}
@@ -60,22 +62,6 @@ public class Game implements KeyListener, ActionListener {
 		player.physics();
 		player.loadImage();
 		Level.collide();
-		
-		if(Player.xSpeed == 0 && Player.ySpeed == 0)
-		{	
-			frzTime++;
-			
-			if(frzTime > 25)
-			{
-				//gameOver = true;
-				frzTime = 0;
-			}
-		}
-		
-		if(Player.xSpeed != 0 || Player.ySpeed != 0)
-		{
-			frzTime = 0;
-		}
 		
 		if(Player.x + Player.width > Level.target.x && Player.y + Player.height > Level.target.y)
 		{
@@ -109,9 +95,6 @@ public class Game implements KeyListener, ActionListener {
 		{
 		case (KeyEvent.VK_ESCAPE):
 			System.exit(0);
-			break;
-		case (KeyEvent.VK_H):
-			Level.stopMusic();
 			break;
 		}
 	}

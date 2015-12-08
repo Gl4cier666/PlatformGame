@@ -13,8 +13,11 @@ public class Player extends Component {
 	private static final long serialVersionUID = 1L;
 	public static int x, y, width, height;
 	public static double xSpeed, ySpeed;
-	public boolean up, down, left, right;
-	static BufferedImage img;
+	public static boolean up;
+	public static boolean down;
+	public static boolean left;
+	public static boolean right;
+	static BufferedImage player, flame;
 	
 	public Player()
 	{
@@ -34,21 +37,25 @@ public class Player extends Component {
 		{
 			y = Game.HEIGHT - 52;
 			ySpeed = 0;
+			Game.gameOver = true;
 		}
 		else if(y < 0)
 		{
 			y = 0;
 			ySpeed = 0;
+			Game.gameOver = true;
 		}
-		else if(x >= Game.WIDTH - 25)
+		else if(x >= Game.WIDTH - 20)
 		{
 			x = Game.WIDTH - 25;
 			xSpeed = 0;
+			Game.gameOver = true;
 		}
 		else if(x < 0)
 		{
 			x = 0;
 			xSpeed = 0;
+			Game.gameOver = true;
 		}
 	}
 	
@@ -57,43 +64,67 @@ public class Player extends Component {
 		if(down)
 		{
 			try {
-				img = ImageIO.read(new File("assets/object_rocket_down.png"));
+				player = ImageIO.read(new File("assets/object_rocket_down.png"));
+				flame = ImageIO.read(new File("assets/afterburner_down.png"));
 			} catch (IOException e){}
 		}
 		
 		if(up)
 		{
 			try {
-				img = ImageIO.read(new File("assets/object_rocket_up.png"));
+				player = ImageIO.read(new File("assets/object_rocket_up.png"));
+				flame = ImageIO.read(new File("assets/afterburner_up.png"));
 			} catch (IOException e){}
 		}
 		
 		if(right)
 		{
 			try {
-				img = ImageIO.read(new File("assets/object_rocket_right.png"));
+				player = ImageIO.read(new File("assets/object_rocket_right.png"));
+				flame = ImageIO.read(new File("assets/afterburner_right.png"));
 			} catch (IOException e){}
 		}
 		
 		if(left)
 		{
 			try {
-				img = ImageIO.read(new File("assets/object_rocket_left.png"));
+				player = ImageIO.read(new File("assets/object_rocket_left.png"));
+				flame = ImageIO.read(new File("assets/afterburner_left.png"));
 			} catch (IOException e){}
 		}
 	}
 	
 	public static void draw(Graphics g)
 	{
-		g.drawImage(img, x, y, null);
+		g.drawImage(player, x, y, null);
+		
+		if(ySpeed >= 3 || ySpeed <= -3 || xSpeed >= 3 || xSpeed <= -3)
+		{
+			if(down)
+			{
+				g.drawImage(flame, x, y - 14, null);
+			}
+			else if(up)
+			{
+				g.drawImage(flame, x, y + 14, null);
+			}
+			else if(right)
+			{
+				g.drawImage(flame, x - 14, y, null);
+			}
+			else if(left)
+			{
+				g.drawImage(flame, x + 14, y, null);
+			}
+		}
 	}
 	
 	public Dimension getPrefferedSize()
 	{
-		if(img == null){
+		if(player == null){
 			return new Dimension(width, height);
 		} else {
-			return new Dimension(img.getWidth(null), img.getHeight(null));
+			return new Dimension(player.getWidth(null), player.getHeight(null));
 		}
 	}
 	
