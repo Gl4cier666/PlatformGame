@@ -15,7 +15,7 @@ public class Game implements KeyListener, ActionListener {
 	public Sound sound;
 	public static boolean gameOver, win;
 	public static final int WIDTH = 640, HEIGHT = 480;
-	public int ticks;
+	public static int ticks, anTime;
 	
 	/**
 	 * @author Bo Aanes
@@ -40,7 +40,6 @@ public class Game implements KeyListener, ActionListener {
 		jframe.setResizable(false);
 		
 		Level.addRects();
-
 		
 		timer.start();
 	}
@@ -59,8 +58,20 @@ public class Game implements KeyListener, ActionListener {
 	{
 		ticks++;
 		
+		if(ticks % 25 == 0)
+		{
+			if(anTime == 0)
+			{
+				anTime++;
+			}
+			else if(anTime == 1)
+			{
+				anTime--;
+			}
+		}
+		
 		player.physics();
-		player.loadImage();
+		Player.loadPlayer();
 		Level.collide();
 		
 		if(Player.x + Player.width > Level.target.x && Player.y + Player.height > Level.target.y)
@@ -77,7 +88,6 @@ public class Game implements KeyListener, ActionListener {
 			
 			gameOver = false;
 		}
-		
 		renderer.repaint();
 	}
 	

@@ -2,6 +2,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +12,8 @@ import javax.imageio.ImageIO;
 public class Player extends Component {
 	
 	private static final long serialVersionUID = 1L;
-	public static int x, y, width, height;
+	public Game game;
+	public static int x, y, flameX, flameY, width, height;
 	public static double xSpeed, ySpeed;
 	public static boolean up;
 	public static boolean down;
@@ -59,10 +61,13 @@ public class Player extends Component {
 		}
 	}
 	
-	public void loadImage()
+	public static void loadPlayer()
 	{
 		if(down)
 		{
+			flameX = 0;
+			flameY = -14;
+			
 			try {
 				player = ImageIO.read(new File("assets/object_rocket_down.png"));
 				flame = ImageIO.read(new File("assets/afterburner_down.png"));
@@ -71,6 +76,9 @@ public class Player extends Component {
 		
 		if(up)
 		{
+			flameX = 0;
+			flameY = 14;
+			
 			try {
 				player = ImageIO.read(new File("assets/object_rocket_up.png"));
 				flame = ImageIO.read(new File("assets/afterburner_up.png"));
@@ -79,6 +87,9 @@ public class Player extends Component {
 		
 		if(right)
 		{
+			flameX = -14;
+			flameY = 0;
+			
 			try {
 				player = ImageIO.read(new File("assets/object_rocket_right.png"));
 				flame = ImageIO.read(new File("assets/afterburner_right.png"));
@@ -87,6 +98,9 @@ public class Player extends Component {
 		
 		if(left)
 		{
+			flameX = 14;
+			flameY = 0;
+			
 			try {
 				player = ImageIO.read(new File("assets/object_rocket_left.png"));
 				flame = ImageIO.read(new File("assets/afterburner_left.png"));
@@ -98,25 +112,13 @@ public class Player extends Component {
 	{
 		g.drawImage(player, x, y, null);
 		
-		if(ySpeed >= 3 || ySpeed <= -3 || xSpeed >= 3 || xSpeed <= -3)
+		if(xSpeed != 0 || xSpeed == 0)
 		{
-			if(down)
-			{
-				g.drawImage(flame, x, y - 14, null);
-			}
-			else if(up)
-			{
-				g.drawImage(flame, x, y + 14, null);
-			}
-			else if(right)
-			{
-				g.drawImage(flame, x - 14, y, null);
-			}
-			else if(left)
-			{
-				g.drawImage(flame, x + 14, y, null);
-			}
+			g.drawImage(flame, x + flameX, y + flameY, null);
+			AffineTransform.getScaleInstance(-1, -1);
 		}
+		
+		//xSpeed <= -3 || ySpeed <= -3 || xSpeed >= 3 || ySpeed >= 3
 	}
 	
 	public Dimension getPrefferedSize()
