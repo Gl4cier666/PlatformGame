@@ -2,7 +2,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -112,13 +111,10 @@ public class Player extends Component {
 	{
 		g.drawImage(player, x, y, null);
 		
-		if(xSpeed != 0 || xSpeed == 0)
+		if(xSpeed <= -3 || ySpeed <= -3 || xSpeed >= 3 || ySpeed >= 3)
 		{
 			g.drawImage(flame, x + flameX, y + flameY, null);
-			AffineTransform.getScaleInstance(-1, -1);
 		}
-		
-		//xSpeed <= -3 || ySpeed <= -3 || xSpeed >= 3 || ySpeed >= 3
 	}
 	
 	public Dimension getPrefferedSize()

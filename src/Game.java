@@ -88,6 +88,7 @@ public class Game implements KeyListener, ActionListener {
 			
 			gameOver = false;
 		}
+		
 		renderer.repaint();
 	}
 	

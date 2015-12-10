@@ -71,7 +71,6 @@ public class Level extends Game {
 	
 	public static void advance()
 	{
-		//Sound.playMusic();
 		
 		if(levelNum == 0)
 		{
