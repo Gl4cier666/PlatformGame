@@ -1,12 +1,19 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.TexturePaint;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 
 public class Level extends Game {
 	
 	public static Rectangle one, two, three, four, five, target;
 	public static int levelNum = 0;
 	public Game game;
+	static BufferedImage levelObject;
 	
 	public static void clearRects()
 	{
@@ -27,7 +34,7 @@ public class Level extends Game {
 			two = new Rectangle(0, HEIGHT / 2 + 30, WIDTH - 30, HEIGHT / 2 - 30);
 			three = new Rectangle(WIDTH / 2 - 60, 50, 120, 120);
 			four = new Rectangle(WIDTH - 120, 0, 120, 80);
-			five = new Rectangle(WIDTH - 120, 120, 90, 210);
+			five = new Rectangle(WIDTH - 120, 120, 90, 150);
 			target = new Rectangle(WIDTH - 30, HEIGHT - 50, 25, 25);
 		}
 		
@@ -56,22 +63,40 @@ public class Level extends Game {
 			}
 	}
 	
+	public static void loadObjects()
+	{
+		try {
+			levelObject = ImageIO.read(new File("assets/images/textures/stone.png"));
+		} catch (Exception e) {
+			System.out.println("ImageError: object");
+		}
+	}
+	
 	public static void draw(Graphics g)
 	{
-		g.setColor(Color.blue);
-		g.fillRect(one.x, one.y, one.width, one.height);
-		g.fillRect(two.x, two.y, two.width, two.height);
-		g.fillRect(three.x, three.y, three.width, three.height);
-		g.fillRect(four.x, four.y, four.width, four.height);
-		g.fillRect(five.x, five.y, five.width, five.height);
-
+		Graphics2D g2 = (Graphics2D) g;
+		BufferedImage image = levelObject;
+		Rectangle r = new Rectangle(0, 0, 64, 64);
+		g2.setPaint(new TexturePaint(image, r));
+		
+		Rectangle fillOne = new Rectangle(one.x, one.y, one.width, one.height);
+		Rectangle fillTwo = new Rectangle(two.x, two.y, two.width, two.height);
+		Rectangle fillThree = new Rectangle(three.x, three.y, three.width, three.height);
+		Rectangle fillFour = new Rectangle(four.x, four.y, four.width, four.height);
+		Rectangle fillFive = new Rectangle(five.x, five.y, five.width, five.height);
+		 
+		g2.fill(fillOne);
+		g2.fill(fillTwo);
+		g2.fill(fillThree);
+		g2.fill(fillFour);
+		g2.fill(fillFive);
+		
 		g.setColor(Color.green);
 		g.fillRect(target.x, target.y, target.width, target.height);
 	}
 	
 	public static void advance()
 	{
-		
 		if(levelNum == 0)
 		{
 			levelNum++;			
@@ -86,6 +111,8 @@ public class Level extends Game {
 		Player.y = 0;
 		Player.xSpeed = 0;
 		Player.ySpeed = 0;
+		
+		Sound.playMusic();
 	}
 	
 }

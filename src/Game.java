@@ -1,10 +1,16 @@
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.TexturePaint;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
@@ -16,6 +22,7 @@ public class Game implements KeyListener, ActionListener {
 	public static boolean gameOver, win;
 	public static final int WIDTH = 640, HEIGHT = 480;
 	public static int ticks, anTime;
+	static BufferedImage bg;
 	
 	/**
 	 * @author Bo Aanes
@@ -28,7 +35,6 @@ public class Game implements KeyListener, ActionListener {
 		
 		renderer = new Renderer();
 		player = new Player();
-		sound = new Sound();
 		
 		jframe.setTitle("Game");
 		jframe.setVisible(true);
@@ -40,14 +46,28 @@ public class Game implements KeyListener, ActionListener {
 		jframe.setResizable(false);
 		
 		Level.addRects();
+		Sound.playMusic();
 		
 		timer.start();
 	}
 	
 	public static void repaint(Graphics g)
 	{
-		g.setColor(Color.black);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		try {
+			bg = ImageIO.read(new File("assets/images/pictures/bg.jpg"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		Graphics2D graphics2D = (Graphics2D) g;
+		BufferedImage image = bg;
+		Rectangle r = new Rectangle(0, 0, WIDTH, HEIGHT);
+		graphics2D.setPaint(new TexturePaint(image, r));
+		
+		Rectangle fillBg = new Rectangle(0, 0, WIDTH, HEIGHT);
+		graphics2D.fill(fillBg);
+		
+		graphics2D.fill(fillBg);
 		
 		Level.draw(g);
 		Player.draw(g);
@@ -58,20 +78,9 @@ public class Game implements KeyListener, ActionListener {
 	{
 		ticks++;
 		
-		if(ticks % 25 == 0)
-		{
-			if(anTime == 0)
-			{
-				anTime++;
-			}
-			else if(anTime == 1)
-			{
-				anTime--;
-			}
-		}
-		
 		player.physics();
 		Player.loadPlayer();
+		Level.loadObjects();
 		Level.collide();
 		
 		if(Player.x + Player.width > Level.target.x && Player.y + Player.height > Level.target.y)

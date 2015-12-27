@@ -9,6 +9,7 @@ public class Sound {
 	
 	public static AudioInputStream audioInput;
 	public static Clip clip;
+	public static boolean isPlaying = false;
 	
 	public Sound()
 	{
@@ -17,6 +18,13 @@ public class Sound {
 	
 	public static void playMusic()
 	{
+		if(isPlaying)
+		{
+			clip.stop();
+			clip.close();
+			isPlaying = false;
+		}
+		
 		char[] chars = "1234".toCharArray();
 		StringBuilder stringBuilder = new StringBuilder();
 		Random random = new Random();
@@ -28,17 +36,16 @@ public class Sound {
 		}
 		String output = stringBuilder.toString();
 		
-		try
-		{
-			audioInput = AudioSystem.getAudioInputStream(new File("assets/song_" + output + ".wav"));
-			Clip clip = AudioSystem.getClip();
+		try {
+			audioInput = AudioSystem.getAudioInputStream(new File("assets/sound/song_" + output + ".wav"));
+			clip = AudioSystem.getClip();
 			clip.open(audioInput);
 			clip.start();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			System.out.println("Error playing sound");
 		}
+		
+		isPlaying = true;
 	}
 	
 }

@@ -68,8 +68,8 @@ public class Player extends Component {
 			flameY = -14;
 			
 			try {
-				player = ImageIO.read(new File("assets/object_rocket_down.png"));
-				flame = ImageIO.read(new File("assets/afterburner_down.png"));
+				player = ImageIO.read(new File("assets/images/textures/object_rocket_down.png"));
+				flame = ImageIO.read(new File("assets/images/textures/afterburner_down.png"));
 			} catch (IOException e){}
 		}
 		
@@ -79,8 +79,8 @@ public class Player extends Component {
 			flameY = 14;
 			
 			try {
-				player = ImageIO.read(new File("assets/object_rocket_up.png"));
-				flame = ImageIO.read(new File("assets/afterburner_up.png"));
+				player = ImageIO.read(new File("assets/images/textures/object_rocket_up.png"));
+				flame = ImageIO.read(new File("assets/images/textures/afterburner_up.png"));
 			} catch (IOException e){}
 		}
 		
@@ -90,8 +90,8 @@ public class Player extends Component {
 			flameY = 0;
 			
 			try {
-				player = ImageIO.read(new File("assets/object_rocket_right.png"));
-				flame = ImageIO.read(new File("assets/afterburner_right.png"));
+				player = ImageIO.read(new File("assets/images/textures/object_rocket_right.png"));
+				flame = ImageIO.read(new File("assets/images/textures/afterburner_right.png"));
 			} catch (IOException e){}
 		}
 		
@@ -101,8 +101,8 @@ public class Player extends Component {
 			flameY = 0;
 			
 			try {
-				player = ImageIO.read(new File("assets/object_rocket_left.png"));
-				flame = ImageIO.read(new File("assets/afterburner_left.png"));
+				player = ImageIO.read(new File("assets/images/textures/object_rocket_left.png"));
+				flame = ImageIO.read(new File("assets/images/textures/afterburner_left.png"));
 			} catch (IOException e){}
 		}
 	}
