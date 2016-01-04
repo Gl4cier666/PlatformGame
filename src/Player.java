@@ -29,7 +29,7 @@ public class Player extends Component {
 		up = true;
 	}
 	
-	public void physics()
+	public static void physics()
 	{
 		x += xSpeed;
 		y += ySpeed;

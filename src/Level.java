@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -13,7 +12,7 @@ public class Level extends Game {
 	public static Rectangle one, two, three, four, five, target;
 	public static int levelNum = 0;
 	public Game game;
-	static BufferedImage levelObject;
+	static BufferedImage levelObject, portal;
 	
 	public static void clearRects()
 	{
@@ -66,9 +65,15 @@ public class Level extends Game {
 	public static void loadObjects()
 	{
 		try {
-			levelObject = ImageIO.read(new File("assets/images/textures/stone.png"));
+			levelObject = ImageIO.read(new File("assets/images/textures/stone_custom.png"));
 		} catch (Exception e) {
-			System.out.println("ImageError: object");
+			System.out.println("ImageError: stone");
+		}
+		
+		try {
+			portal = ImageIO.read(new File("assets/images/textures/portal.png"));
+		} catch (Exception e) {
+			System.out.println("ImageError: portal");
 		}
 	}
 	
@@ -76,7 +81,7 @@ public class Level extends Game {
 	{
 		Graphics2D g2 = (Graphics2D) g;
 		BufferedImage image = levelObject;
-		Rectangle r = new Rectangle(0, 0, 64, 64);
+		Rectangle r = new Rectangle(0, 0, 32, 32);
 		g2.setPaint(new TexturePaint(image, r));
 		
 		Rectangle fillOne = new Rectangle(one.x, one.y, one.width, one.height);
@@ -91,8 +96,7 @@ public class Level extends Game {
 		g2.fill(fillFour);
 		g2.fill(fillFive);
 		
-		g.setColor(Color.green);
-		g.fillRect(target.x, target.y, target.width, target.height);
+		g.drawImage(portal, target.x, target.y, null);
 	}
 	
 	public static void advance()

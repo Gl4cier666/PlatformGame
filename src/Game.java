@@ -78,7 +78,7 @@ public class Game implements KeyListener, ActionListener {
 	{
 		ticks++;
 		
-		player.physics();
+		Player.physics();
 		Player.loadPlayer();
 		Level.loadObjects();
 		Level.collide();
@@ -115,6 +115,9 @@ public class Game implements KeyListener, ActionListener {
 		{
 		case (KeyEvent.VK_ESCAPE):
 			System.exit(0);
+			break;
+		case (KeyEvent.VK_Q):
+			Level.advance();
 			break;
 		}
 	}
